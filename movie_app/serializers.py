@@ -13,18 +13,20 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = 'title duration director'.split(' ')
 
 class ReviewSerializer(serializers.ModelSerializer):
-    movie = serializers.CharField(source='movie.title')
+
 
     class Meta:
         model = models.Review
-        fields = '__all__'
+        fields = 'text points'.split(' ')
+
 
 
 
 
 
 class DirectorDetailSerializer(serializers.ModelSerializer):
-    movies = MovieSerializer(source='movie_set', many=True, read_only=True)
+    movies = MovieSerializer(source='movie_set', many=True)
+
     class Meta:
         model = models.Director
         fields = ['id', 'name', 'movies']
@@ -39,3 +41,4 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Review
         fields = '__all__'
+
